@@ -30,11 +30,12 @@
 
 ## 🚀 安裝與執行
 
-### 方法一：下載已編譯的桌面應用程式（推薦）
-請前往本儲存庫的 **[Releases]** 頁面，下載適用於您作業系統的最新發布版本。
+### 方法一：線上網頁版 (Live Demo) ✨ 最快速
+本專案已透過 GitHub Pages 自動部署，無需下載安裝任何軟體，點擊下方連結即可直接在電腦或手機瀏覽器中觀看實時運作的顯示屏：
+👉 **[前往 Citybus GTC PIDS 網頁版](https://kenyip0244.github.io/Citybus-GTC-PIDS-Simulator/)**
 
-### 方法二：網頁瀏覽器直接開啟
-本專案的顯示核心為純前端網頁架構，您可以直接在瀏覽器中開啟 `index.html`，即可全螢幕運行模擬器。
+### 方法二：下載已編譯的桌面應用程式
+請前往本儲存庫的 **[Releases](https://github.com/kenyip0244/Citybus-GTC-PIDS-Simulator/releases)** 頁面，下載適用於您作業系統的最新發布版本（支援 Windows、macOS、Linux）。
 
 ### 方法三：本地端開發與編譯
 請確保您的電腦已安裝 [Node.js](https://nodejs.org/)。
@@ -47,13 +48,15 @@ cd Citybus-GTC-PIDS-Simulator
 # 2. 安裝依賴套件
 npm install
 
-# 3. 本地端即時測試運行
+# 3. 本地端即時測試運行（以 Electron 視窗開啟）
 npm start
 
 # 4. 手動打包應用程式
 npm run make
 
 ```
+
+*(註：您也可以單純下載專案原始碼後，直接用瀏覽器開啟 `index.html` 執行網頁版)*
 
 ---
 
