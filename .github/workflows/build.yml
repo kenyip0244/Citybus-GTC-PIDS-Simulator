@@ -13,6 +13,7 @@ jobs:
     name: Build on ${{ matrix.os }}
     runs-on: ${{ matrix.os }}
     strategy:
+      fail-fast: false
       matrix:
         os: [windows-latest, macos-latest, ubuntu-latest]
 
@@ -25,28 +26,38 @@ jobs:
         with:
           node-version: 20
 
-      - name: Install Linux dependencies
+      - name: Install Linux build dependencies
         if: runner.os == 'Linux'
         run: |
           sudo apt-get update
           sudo apt-get install -y rpm fakeroot dpkg
 
-      - name: Install npm dependencies
+      - name: Install npm packages
         run: npm install
 
-      - name: Build Application with Electron Forge
+      - name: Build with Electron Forge
         run: npm run make
 
-      - name: Upload Release Artifacts
-        uses: softprops/action-gh-release@v2
-        if: startsWith(github.ref, 'refs/tags/')
+      - name: Archive build artifacts
+        uses: actions/upload-artifact@v4
         with:
-          files: |
-            out/make/**/*.exe
-            out/make/**/*.zip
-            out/make/**/*.dmg
-            out/make/**/*.deb
-            out/make/**/*.rpm
-            out/make/**/*.AppImage
+          name: app-${{ matrix.os }}
+          path: out/make/
+          if-no-files-found: warn
+
+  release:
+    name: Publish Release
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download all artifacts
+        uses: actions/download-artifact@v4
+        with:
+          path: release-files
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: release-files/**/*
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
